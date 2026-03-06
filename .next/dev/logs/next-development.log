@@ -1,6 +1,0 @@
-[00:00:02.982] Server  LOG     ✓ Ready in 2.3s
-[00:00:03.218] Server  WARN    ⚠ Your page app/page.jsx did not have a root layout. We created app\layout.js for you.
-[00:00:06.094] Server  LOG     ○ Compiling / ...
-[00:00:09.795] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:00:24.859] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:00:25.328] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
