@@ -1,3 +1,5 @@
 export default async function HomePage() {
-    return <div>항</div>
+    return (
+        <h1>Home!</h1>
+    )
 }
