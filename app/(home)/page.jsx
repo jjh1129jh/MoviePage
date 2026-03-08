@@ -1,3 +1,6 @@
+import Movie from "../../jsx/movie";
+import css from "../../styles/home.module.css"
+
 export const metadata = {
     title: "HOME",
 }
@@ -8,9 +11,22 @@ async function delay(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+async function getMovies() {
+    const response = await fetch(API_URL);
+    const json = await response.json();
+    return json;
+}
+
 export default async function HomePage() {
     // await delay(500);
+    const movies = await getMovies();
     return (
-        <h1>Home!</h1>
+        <div className={css.container}>
+        {
+            movies.map((movie, id) => (
+                <Movie key={movie.title} title={movie.title} id={movie.id} poster_path={movie.poster_path}></Movie>
+            ))
+        }
+        </div>
     )
 }
