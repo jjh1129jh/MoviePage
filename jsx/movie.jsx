@@ -13,7 +13,7 @@ export default function Movie({title, id, poster_path}) {
     return (
         <div className={css.movie} key={id}>
             <img src={poster_path} alt={title} onClick={imgLink} />
-            <Link href={`/movies/${id}`}>{title}</Link>
+            <Link prefetch href={`/movies/${id}`}>{title}</Link>
         </div>
     )
 }
