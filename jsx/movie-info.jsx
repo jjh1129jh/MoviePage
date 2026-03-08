@@ -15,7 +15,7 @@ export default async function MovieInfo({ id }) {
                 <h1 className={css.title}>{movie.title}</h1>
                 <h3>⭐️{movie.vote_average.toFixed(1)}</h3>
                 <p>{movie.overview}</p>
-                <a href="movie.homepage" target={"_blank"}>Homepage</a>
+                <a href={movie.homepage} target={"_blank"}>Homepage</a>
             </div>
         </div>
     )
