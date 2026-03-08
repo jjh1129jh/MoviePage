@@ -1,5 +1,4 @@
 import Movie from "../../jsx/movie";
-import css from "../../styles/home.module.css"
 
 export const metadata = {
     title: "HOME",
@@ -21,12 +20,13 @@ export default async function HomePage() {
     // await delay(500);
     const movies = await getMovies();
     return (
-        <div className={css.container}>
+        <div className="grid grid-cols-5 gap-6 w-[90%] mx-auto!">
         {
             movies.map((movie, id) => (
                 <Movie key={movie.title} title={movie.title} id={movie.id} poster_path={movie.poster_path}></Movie>
             ))
         }
         </div>
+        
     )
 }
