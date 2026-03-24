@@ -1,4 +1,5 @@
-import Movie from "../../jsx/movie";
+import Banner from "../../jsx/movie_banner";
+import MovieSlider from "../../jsx/movieSlider";
 
 export const metadata = {
     title: "HOME",
@@ -20,13 +21,12 @@ export default async function HomePage() {
     // await delay(500);
     const movies = await getMovies();
     return (
-        <div className="grid grid-cols-5 gap-6 w-[90%] mx-auto!">
-        {
-            movies.map((movie, id) => (
-                <Movie key={movie.title} title={movie.title} id={movie.id} poster_path={movie.poster_path}></Movie>
-            ))
-        }
-        </div>
-        
+        <main className="min-h-screen py-8overflow-x-hidden">
+            <Banner movies={movies}></Banner>
+            <MovieSlider movies={movies} title="지금 뜨는 콘텐츠" />
+            <MovieSlider movies={movies.slice().reverse()} title="시청중인 콘텐츠"/>
+            <MovieSlider movies={movies.slice(5, 15)} title="오늘의 TOP 10 영화" />
+            <div className="h-64">항</div>
+        </main>
     )
 }
