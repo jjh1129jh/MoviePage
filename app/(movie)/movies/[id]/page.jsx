@@ -1,7 +1,8 @@
 import { Suspense } from "react";
-import MovieVideos from "../../../../jsx/movie-videos";
-import MovieInfo, { getMovie } from "../../../../jsx/movie-info";
+import MovieInfo, { getMovie, Overview } from "../../../../jsx/movie-info";
 import Loading from "./loading";
+import MovieAdditiona from "../../../../jsx/movieAdditional";
+import MovieVideos from "../../../../jsx/movie-videos";
 
 export async function generateMetadata({ params }) {//generateMetadata 넥스트에서 제공하는 메타데이터 함수
     const { id } = await params;
@@ -17,13 +18,21 @@ export default async function MovieDetail({ params }) {
     const { id } = await params;
 
     return (
-        <div>
-            <Suspense>
+        <div className="flex flex-col md:flex-row">
+            <Suspense fallback={<Loading />}>
                 <MovieInfo id={id}/>
             </Suspense>
-            <Suspense fallback={<Loading />}>
-                <MovieVideos id={id} />
-            </Suspense>
+            <MovieAdditiona id={id}
+            children2={
+                <Suspense>
+                    <Overview id={id} />
+                </Suspense>
+            }>
+                <Suspense>
+                    <MovieVideos id={id} />
+                </Suspense>
+            </MovieAdditiona>
+            
         </div>
     )
 }

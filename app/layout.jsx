@@ -1,5 +1,6 @@
 import "../styles/global.css"
 import Navigation from "../jsx/navigation"
+import Footer from "../jsx/footer"
 
 export const metadata = {
   title: {
@@ -15,6 +16,7 @@ export default function RootLayout({ children }) {
       <body>
         <Navigation></Navigation>
         {children}
+        <Footer/>
         </body>
     </html>
   )

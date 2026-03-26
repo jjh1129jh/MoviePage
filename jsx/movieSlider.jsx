@@ -85,6 +85,12 @@ export default function MovieSlider({ movies, title }) {
 
   const modalStyle = getModalStyle();
 
+  const truncatedOverview = selectedMovie?.overview
+  ? selectedMovie.overview.length > 200
+    ? selectedMovie.overview.slice(0, 200) + "..."
+    : selectedMovie.overview
+  : "상세 정보가 없습니다.";
+
   return (
     <section className="md:mb-16 relative group">
       <h2 className="text-xl md:text-2xl font-bold mb-4 px-[4%] text-white">{title}</h2>
@@ -93,7 +99,7 @@ export default function MovieSlider({ movies, title }) {
         {showLeftArrow && !isMobile && (
           <button 
             onClick={() => scrollTo("left")} 
-            className="absolute bg-[url('/img/slider_arrow.svg')] bg-no-repeat bg-contain left-[2%] top-[45%] -translate-y-1/2 w-10 h-10 rotate-270 z-50 cursor-pointer hover:brightness-125 transition-all"
+            className="absolute bg-[url('/img/slider_arrow.svg')] bg-no-repeat bg-contain left-[2%] top-[37%] -translate-y-1/2 w-10 h-10 rotate-270 z-50 cursor-pointer hover:brightness-125 transition-all"
           />
         )}
 
@@ -115,11 +121,9 @@ export default function MovieSlider({ movies, title }) {
         {showRightArrow && !isMobile && (
           <button 
             onClick={() => scrollTo("right")} 
-            className="absolute bg-[url('/img/slider_arrow.svg')] bg-no-repeat bg-contain right-[2%] top-[45%] -translate-y-1/2 w-10 h-10 rotate-90 z-50 cursor-pointer hover:brightness-125 transition-all"
+            className="absolute bg-[url('/img/slider_arrow.svg')] bg-no-repeat bg-contain right-[2%] top-[37%] -translate-y-1/2 w-10 h-10 rotate-90 z-50 cursor-pointer hover:brightness-125 transition-all"
           />
         )}
-
-        {/* 💡 수정된 모달 스타일 적용 */}
         {!isMobile && selectedMovieId && modalStyle && (
           <div 
             className={`absolute bg-[#181818] rounded-2xl overflow-hidden shadow-[0_0_60px_rgba(0,0,0,0.9)] z-[100] pointer-events-auto
@@ -128,16 +132,14 @@ export default function MovieSlider({ movies, title }) {
             onMouseLeave={handleCloseModal}
           >
             <div className="w-full h-full flex flex-col">
-              {/* 이미지 영역: aspect-video 등으로 비율을 유지하는 것이 좋습니다 */}
               <div className="w-full aspect-video relative">
                 <img src={selectedMovie?.backdrop_path} className="w-full h-full object-cover" alt="" />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#181818] to-transparent" />
               </div>
-              {/* 텍스트 영역: h-auto가 되도록 h-1/2 대신 여백으로 조절 */}
               <div className="p-6 md:p-8 flex-1">
                 <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">{selectedMovie?.title}</h3>
                 <p className="text-gray-400 text-sm leading-relaxed">
-                  {selectedMovie?.overview || "상세 정보가 없습니다."}
+                  {truncatedOverview}
                 </p>
               </div>
             </div>

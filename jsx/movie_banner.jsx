@@ -135,7 +135,7 @@ export default function BannerM({ movies, title }) {
         >
           <div className="flex-none w-[12.5%] md:w-[7.5%] shrink-0" />
 
-          {[...movies].filter((_, index) => [2, 9, 10, 12, 17].includes(index)).map((movie) => (
+          {[...movies].filter((_, index) => [5, 9, 10, 14, 17].includes(index)).map((movie) => (
             <div 
               key={movie.id} 
               className="flex-none snap-center transition-transform duration-300 w-[75%] md:w-[85%] border-1 md:border-0 border-gray-400/50 rounded-2xl overflow-hidden shadow-xl"
@@ -164,7 +164,7 @@ export default function BannerM({ movies, title }) {
                   
                 </div>
                 
-                <div className="absolute bottom-0 md:top-0 left-0 w-full flex flex-col-reverse h-[80px] md:h-full bg-[linear-gradient(0deg,rgba(0,0,0,0.7)0%,rgba(0,0,0,0.4)60%,transparent 100%)] md:bg-[linear-gradient(90deg,rgba(0,0,0,0.7)0%,rgba(255,255,255,0)100%)] px-5 pb-5 md:px-0 md:pl-[5%] md:pb-[17.5%]">
+                <div className="absolute bottom-0 md:top-0 left-0 w-full flex flex-col-reverse h-[100px] md:h-full bg-[linear-gradient(0deg,rgba(0,0,0,7)0%,rgba(0,0,0,0.7)50%,rgba(0,0,0,0)100%)] md:bg-[linear-gradient(90deg,rgba(0,0,0,0.4)0%,rgba(255,255,255,0)60%)] px-5 pb-5 md:px-0 md:pl-[5%] md:pb-[17.5%]">
                   <div className="flex items-center justify-between w-full md:w-1/4 gap-3">
                     <button 
                       className="w-full h-10 md:h-14 rounded-[6px] bg-white text-[#1e1e1e] font-bold hover:bg-gray-200 transition-colors"
@@ -173,7 +173,7 @@ export default function BannerM({ movies, title }) {
                       ▶ 재생하기
                     </button>
                     <button 
-                      className="w-full h-10 md:h-14 rounded-[6px] bg-gray-400/30 backdrop-blur-md text-white border border-gray-500/50"
+                      className="w-full h-10 md:h-14 rounded-[6px] bg-gray-400/30 backdrop-blur-md text-white border border-gray-500/50 md:border-0"
                       onClick={(e) => isDragged && e.stopPropagation()}
                     >
                       + 찜하기
