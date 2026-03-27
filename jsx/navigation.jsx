@@ -9,7 +9,7 @@ export default function Navigation() {
     const isMobile = useMobile();
     return (
         <nav className="py-5">
-            <ul className="flex items-center justify-between px-4">
+            <ul className="flex items-center justify-between px-4 md:px-8">
                 <li className="w-10">
                 <Link href="/"><img src="/img/logo.png" alt="로고" /></Link>
                 </li>

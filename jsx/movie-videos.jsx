@@ -2,8 +2,10 @@ import { API_URL } from "../app/(home)/page";
 
 
 async function getVideos(id) {
-    const reponse = await fetch(`${API_URL}/${id}/videos`);
-    return reponse.json();
+    const response = await fetch(`${API_URL}/${id}/videos`, {
+        next: { revalidate: 3600 } // 1시간동안 캐시 유지
+    });
+    return response.json();
 }
 
 export default async function MovieVideos({ id }) {

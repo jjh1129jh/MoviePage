@@ -8,7 +8,7 @@ export async function getMovie(id) {
 export default async function MovieInfo({ id }) {
     const movie = await getMovie(id)
     return (
-        <div className="px-4">
+        <div className="px-4 md:w-[70%] md:px-0">
             <img src={movie.backdrop_path} alt={movie.title} />
             <div>
                 <h1 className="mt-6 text-3xl font-bold">{movie.title}</h1>
@@ -16,10 +16,14 @@ export default async function MovieInfo({ id }) {
                 <p className="hidden md:block">{movie.overview}</p>
                 <button className="mt-5 w-full h-12 rounded-[8px] bg-white text-black font-bold">▶ 재생하기</button>
                 <div className="mt-5 flex gap-2 w-full h-9 text-center">
-                    <button className="rounded-[30px] w-[25%] h-full bg-gray-500">+ 찜하기</button>
-                    <a className="rounded-[30px] w-[25%] h-full bg-gray-500 leading-9" href={movie.homepage} target={"_blank"}>홈페이지</a>
+                    <button className="rounded-[30px] w-[25%] h-full bg-gray-500/80 text-[14px]">+ 찜하기</button>
+                    <a className="rounded-[30px] w-[25%] h-full bg-gray-500/80 leading-9 text-[14px]" href={movie.homepage} target={"_blank"}>홈페이지</a>
                 </div>
             </div>
+            <div className="hidden md:block">
+                <Overview id={id}/>
+            </div>
+            
         </div>
     )
 }
@@ -27,7 +31,15 @@ export default async function MovieInfo({ id }) {
 export async function Overview({ id }) {
     const movie = await getMovie(id)
     return(
-        <p className="mt-8 text-[18px]">{movie.overview}</p>
+        <>
+            <h3 className="mt-6 text-[18px] font-black">시놉시스</h3>
+            <p className="mt-2 mb-6 text-[16px]">{movie.overview}</p>
+            <div className="pt-4 border-t border-gray-700">
+                <p className="font-black text-[18px]">언어</p>
+                <p className="mt-2 text-[16px]">{movie.original_language.toUpperCase()}</p>
+            </div>
+        </>
+
     )
 }
 
