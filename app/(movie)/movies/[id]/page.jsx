@@ -18,7 +18,7 @@ export default async function MovieDetail({ params }) {
     const { id } = await params;
 
     return (
-        <div className="flex flex-col md:flex-row md:gap-8 md:px-8 md:pb-10">
+        <div className="flex flex-col md:flex-row md:gap-8 md:px-8">
             <Suspense fallback={<Loading />}>
                 <MovieInfo id={id}/>
             </Suspense>

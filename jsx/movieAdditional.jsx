@@ -76,19 +76,19 @@ export default function MovieAdditional({id , children , children2}) {
         else {return tabToggle === e && 'md:border-white'}
     }
     return (
-        <div className="mt-6 px-4 md:mt-0 md:px-0 bg-[#202020] md:w-[30%] md:relative">
+        <div className="mt-6 px-4 md:mt-0 md:px-0 bg-[#202020] md:w-[33%] md:relative">
             <ul className="mt-6 flex gap-4 md:gap-0">
                 <li onClick={()=>{setTabToggle(0)}} className={`pb-1 cursor-pointer border-white ${tabOn(0)} md:w-1/2 md:text-center md:border-b-[2px] md:border-gray-500`}>리뷰</li>
                 <li onClick={()=>{setTabToggle(1)}} className={`pb-1 cursor-pointer border-white ${tabOn(1)} md:w-1/2 md:text-center md:border-b-[2px] md:border-gray-500`}>관련영상</li>
                 <li onClick={()=>{setTabToggle(2)}} className={`pb-1 cursor-pointer border-white ${tabOn(2)} md:hidden`}>상세정보</li>
             </ul>
             {/* 리뷰 */}
-            <div className={`pb-8 ${tabToggle === 0 ? "block" : "hidden"}`}>
+            <div className={`pb-8 md:pb-0 ${tabToggle === 0 ? "block" : "hidden"} md:h-[140vh] md:overflow-y-auto [&::-webkit-scrollbar]:hidden`}>
                 {
                     loading
                     ? <p>loading...</p>
                     : (
-                        <ul className="mt-6 mx-1 md:px-4 md:pb-6">
+                        <ul className="mt-6 mx-1 md:px-4 md:mx-0 md:mt-40 md:h-full">
                             {comments.map((comment) => {
                                 return(
                                     <li key={comment.id} className="border-b border-gray-700 pb-2">
@@ -107,24 +107,37 @@ export default function MovieAdditional({id , children , children2}) {
                         </ul>
                     )
                 }
-                <div className="fixed md:absolute bottom-0 left-0 w-full p-2 bg-gray-950 border-t-1 border-gray-100/80 mt-4 flex gap-2 z-1000">
-                    <input 
-                        type="text" 
-                        value={inputValue}
-                        onChange={(e) => setInputValue(e.target.value)}
-                        placeholder="리뷰를 입력해주세요..."
-                        className="flex-1 outline-none rounded-2xl bg-gray-800 py-2 indent-3 text-white"
-                    />
+                <div className="fixed md:absolute bottom-0 md:bottom-auto md:top-13.5 left-0 w-full p-2 md:p-4 md:py-6 bg-gray-950 md:bg-[#202020] border-t-1 md:border-t-0 md:border-b-1 border-gray-100/80 md:border-gray-700 mt-4 md:mt-0 flex gap-2 md:gap-4 z-1000">
+                    {
+                        isMobile
+                        ?   <input 
+                                type="text" 
+                                value={inputValue}
+                                onChange={(e) => setInputValue(e.target.value)}
+                                placeholder="리뷰를 입력해주세요..."
+                                className="flex-1 outline-none rounded-2xl bg-gray-800 py-2 indent-3 text-white"
+                            />
+                        :    <>
+                            <textarea 
+                                type="text" 
+                                value={inputValue}
+                                onChange={(e) => setInputValue(e.target.value)}
+                                placeholder="리뷰를 입력해주세요..."
+                                className="flex-1 outline-none rounded-2xl bg-gray-800 p-4 h-24 text-white resize-none"
+                            />
+                            </>
+
+                    }   
                     <button 
                         onClick={handlePost}
-                        className="text-black px-4 bg-gray-600 py-2 rounded-2xl text-sm font-bold transition-transform text-white/70"
+                        className="text-black px-4 bg-gray-600 py-2 rounded-2xl text-sm font-bold transition-transform text-white/70 cursor-pointer"
                     >
                         등록
                     </button>
                 </div>
             </div>
             {/* 관련영상 */}
-            <div className={`pb-8 md:px-4 ${tabToggle === 1 ? "block" : "hidden"}`}>{children}</div>
+            <div className={`pb-8 md:px-4 ${tabToggle === 1 ? "block" : "hidden"} md:h-[140vh] md:overflow-y-auto [&::-webkit-scrollbar]:hidden`}>{children}</div>
             {/* 상세정보 */}
             <div className={`pb-8 ${tabToggle === 2 && isMobile ? "block" : "hidden"}`}>{children2}</div>
         </div>

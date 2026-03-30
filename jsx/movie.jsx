@@ -63,3 +63,8 @@ export default function Movie({ title, id, backdrop_path, poster_path, onHoverSh
         </div>
     )
 }
+
+export function GoMoviePage ({ id , title }) {
+    const router = useRouter();
+    return <h1 className="absolute top-[3%] left-[3%] text-2xl cursor-pointer z-10 opacity-0 group-hover:opacity-100" onClick={()=>{router.push(`/movies/${id}`);}}><strong>〈</strong>&ensp;{title}</h1>
+}

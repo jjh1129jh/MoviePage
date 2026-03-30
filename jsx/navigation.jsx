@@ -7,6 +7,10 @@ import { useMobile } from "./useMobile";
 export default function Navigation() {
     const path = usePathname();
     const isMobile = useMobile();
+    const pathname = usePathname();
+    
+    if (pathname.startsWith("/contents/")) return null;
+    
     return (
         <nav className="py-5">
             <ul className="flex items-center justify-between px-4 md:px-8">

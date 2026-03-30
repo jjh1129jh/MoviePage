@@ -1,4 +1,11 @@
+"use client";
+
+import { usePathname } from "next/navigation";
+
 export default function Footer() {
+    const pathname = usePathname();
+    if (pathname.startsWith("/contents/")) return null;
+
     return (
         <footer className="h-45 md:h-34 flex flex-col">
             <div className="w-full h-full md:h-[60%] flex flex-col md:flex-row md:gap-2 pb-5 md:pb-3 md:pr-3 items-center md:items-end justify-center bg-gray-800 md:bg-[#1d1d1d] relative">

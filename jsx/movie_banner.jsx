@@ -167,13 +167,17 @@ export default function BannerM({ movies, title }) {
                 <div className="absolute bottom-0 md:top-0 left-0 w-full flex flex-col-reverse h-[100px] md:h-full bg-[linear-gradient(0deg,rgba(0,0,0,7)0%,rgba(0,0,0,0.7)50%,rgba(0,0,0,0)100%)] md:bg-[linear-gradient(90deg,rgba(0,0,0,0.4)0%,rgba(255,255,255,0)60%)] px-5 pb-5 md:px-0 md:pl-[5%] md:pb-[17.5%]">
                   <div className="flex items-center justify-between w-full md:w-1/4 gap-3">
                     <button 
-                      className="w-full h-10 md:h-14 rounded-[6px] bg-white text-[#1e1e1e] font-bold hover:bg-gray-200 transition-colors"
-                      onClick={(e) => isDragged && e.stopPropagation()}
+                      className="w-full h-10 md:h-14 rounded-[6px] bg-white text-[#1e1e1e] font-bold hover:bg-gray-200 transition-colors cursor-pointer"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        e.preventDefault();
+                        router.push(`/contents/${movie.id}`);
+                      }}
                     >
                       ▶ 재생하기
                     </button>
                     <button 
-                      className="w-full h-10 md:h-14 rounded-[6px] bg-gray-400/30 backdrop-blur-md text-white border border-gray-500/50 md:border-0"
+                      className="w-full h-10 md:h-14 rounded-[6px] bg-gray-400/30 backdrop-blur-md text-white border border-gray-500/50 md:border-0 cursor-pointer"
                       onClick={(e) => isDragged && e.stopPropagation()}
                     >
                       + 찜하기
