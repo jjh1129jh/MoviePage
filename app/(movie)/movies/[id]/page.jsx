@@ -10,7 +10,6 @@ export async function generateMetadata({ params }) {//generateMetadata 넥스트
     return {
         title:movie.title
     }
-    
 }
 
 // params = 주소 맨끝의 고유 id

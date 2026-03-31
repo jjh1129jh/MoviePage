@@ -24,6 +24,10 @@ export default function BannerM({ movies, title }) {
   const router = useRouter();
   const isMobile = useMobile();
 
+  const DB_NAME = "MovieDB";
+  const DB_VERSION = 1; 
+  const [isWished, setIsWished] = useState({});
+
   // --- 추가된 함수: 비디오 키 가져오기 ---
   const fetchVideoKey = async (id) => {
     if (videoKeys[id]) return; // 이미 있으면 다시 호출 안 함
@@ -107,6 +111,68 @@ export default function BannerM({ movies, title }) {
     router.push(`/movies/${movieId}`);
   };
 
+  const initDB = () => {
+      return new Promise((resolve, reject) => {
+          const request = indexedDB.open(DB_NAME, DB_VERSION);
+
+          request.onupgradeneeded = (event) => {
+              const db = event.target.result;
+              // 최근시청기록
+              if (!db.objectStoreNames.contains("recent_vids")) {
+                  db.createObjectStore("recent_vids", { keyPath: "id" });
+              }
+              // 찜하기목록
+              if (!db.objectStoreNames.contains("wish_list")) {
+                  db.createObjectStore("wish_list", { keyPath: "id" });
+              }
+          };
+
+          request.onsuccess = () => resolve(request.result);
+          request.onerror = () => reject("IndexedDB 로드 실패");
+      });
+  };
+
+const saveData = async (storeName, data) => {
+    try {
+        const db = await initDB();
+        const transaction = db.transaction(storeName, "readwrite");
+        const store = transaction.objectStore(storeName);
+        
+        store.put({
+            ...data,
+            timestamp: new Date().getTime()
+        });
+    } catch (err) {
+        console.error("데이터 저장 중 오류 발생:", err);
+    }
+  };
+
+  const deleteData = async (storeName, id) => {
+      try {
+          const db = await initDB();
+          const transaction = db.transaction(storeName, "readwrite");
+          const store = transaction.objectStore(storeName);
+          store.delete(id);
+      } catch (err) {
+          console.error("데이터 삭제 중 오류 발생:", err);
+      }
+  };
+
+  const checkIsWished = async (id) => {
+      try {
+          const db = await initDB();
+          return new Promise((resolve) => {
+              const transaction = db.transaction("wish_list", "readonly");
+              const store = transaction.objectStore("wish_list");
+              const request = store.get(id); // ID로 조회
+              request.onsuccess = () => resolve(!!request.result); // 데이터가 있으면 true, 없으면 false
+              request.onerror = () => resolve(false);
+          });
+      } catch {
+          return false;
+      }
+  };
+
   useEffect(() => {
     handleScroll();
     window.addEventListener('resize', handleScroll);
@@ -115,6 +181,30 @@ export default function BannerM({ movies, title }) {
       if (timerRef.current) clearTimeout(timerRef.current);
     };
   }, [movies]);
+
+  useEffect(() => {
+    const initWishStatus = async () => {
+      const statusMap = {};
+      for (const movie of movies) {
+        statusMap[movie.id] = await checkIsWished(movie.id);
+      }
+      setIsWished(statusMap);
+    };
+    if (movies.length > 0) initWishStatus();
+  }, [movies]);
+
+  const handleWish = async (e, movieId) => {
+    e.stopPropagation();
+    e.preventDefault();
+    
+    if (isWished[movieId]) {
+      await deleteData("wish_list", movieId);
+      setIsWished(prev => ({ ...prev, [movieId]: false }));
+    } else {
+      await saveData("wish_list", { id: movieId });
+      setIsWished(prev => ({ ...prev, [movieId]: true }));
+    }
+  };
 
   return (
     <section className="mb-8 md:mb-16 relative group overflow-hidden">
@@ -172,15 +262,20 @@ export default function BannerM({ movies, title }) {
                         e.stopPropagation();
                         e.preventDefault();
                         router.push(`/contents/${movie.id}`);
+                        saveData("recent_vids", {id: movie.id,});
                       }}
                     >
                       ▶ 재생하기
                     </button>
                     <button 
-                      className="w-full h-10 md:h-14 rounded-[6px] bg-gray-400/30 backdrop-blur-md text-white border border-gray-500/50 md:border-0 cursor-pointer"
-                      onClick={(e) => isDragged && e.stopPropagation()}
+                      className={`w-full h-10 md:h-14 rounded-[6px] ${isWished[movie.id] ? 'bg-orange-500' : 'bg-gray-400/30'} backdrop-blur-md text-white border border-gray-500/50 md:border-0 cursor-pointer`}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        e.preventDefault();
+                        handleWish(e, movie.id)
+                      }}
                     >
-                      + 찜하기
+                      {isWished[movie.id] ? "- 찜해제" : "+ 찜하기"}
                     </button>
                   </div>
                   {!isMobile && (

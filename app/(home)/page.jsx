@@ -24,6 +24,7 @@ export default async function HomePage() {
     const latestMovies = [...movies].sort((a, b) => {
         return new Date(b.release_date) - new Date(a.release_date);
     });
+
     return (
         <main className="min-h-screen py-8overflow-x-hidden">
             <Banner movies={movies}></Banner>

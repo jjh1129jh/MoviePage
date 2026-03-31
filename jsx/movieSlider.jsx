@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react"
 import Movie from "./movie"
 import { useMobile } from "./useMobile";
+import { useRouter } from "next/navigation";
 
 export default function MovieSlider({ movies, title }) {
   const sliderRef = useRef(null);
@@ -91,6 +92,12 @@ export default function MovieSlider({ movies, title }) {
     : selectedMovie.overview
   : "상세 정보가 없습니다.";
 
+    const router = useRouter();
+    const imgLink = (id) => {
+      console.log(selectedMovieId)
+        router.push(`/movies/${id}`);
+    }
+
   return (
     <section className="md:mb-16 relative group">
       <h2 className="text-xl md:text-2xl font-bold mb-4 px-[4%] text-white">{title}</h2>
@@ -131,12 +138,12 @@ export default function MovieSlider({ movies, title }) {
             style={modalStyle} // width와 left, top이 포함됨
             onMouseLeave={handleCloseModal}
           >
-            <div className="w-full h-full flex flex-col">
+            <div className="w-full h-full flex flex-col cursor-pointer" onClick={() => imgLink(selectedMovieId)}>
               <div className="w-full aspect-video relative">
                 <img src={selectedMovie?.backdrop_path} className="w-full h-full object-cover" alt="" />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#181818] to-transparent" />
               </div>
-              <div className="p-6 md:p-8 flex-1">
+              <div className="p-6 md:p-8 flex-1 pointer-events-none">
                 <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">{selectedMovie?.title}</h3>
                 <p className="text-gray-400 text-sm leading-relaxed">
                   {truncatedOverview}
