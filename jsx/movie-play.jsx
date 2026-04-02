@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 
 const DB_NAME = "MovieDB";
 const DB_VERSION = 1;
@@ -70,7 +70,7 @@ const checkIsWished = async (id) => {
 export default function ContentsPlay({ movie }) {
     const [playSwitch, setPlaySwitch] = useState(0);
     const [isWished, setIsWished] = useState(false); // 찜 상태 관리
-
+    const videoRef = useRef(null);
     useEffect(() => {
         const initWishStatus = async () => {
             const status = await checkIsWished(movie.id);
@@ -78,6 +78,22 @@ export default function ContentsPlay({ movie }) {
         };
         initWishStatus();
     }, [movie.id]);
+
+    // 💡 재생 안되면 강제 재생
+    useEffect(() => {
+        let timer;
+        if (playSwitch === 1 && videoRef.current) {
+            timer = setTimeout(() => {
+                const video = videoRef.current;
+                if (video && (video.paused || video.ended)) {
+                    video.play().catch((err) => {
+                        console.log("재생 실패", err);
+                    });
+                }
+            }, 2000);
+        }
+        return () => clearTimeout(timer); // 언마운트 시 타이머 정리
+    }, [playSwitch]);
 
     const handlePlay = () => {
         setPlaySwitch(1);
@@ -114,6 +130,7 @@ export default function ContentsPlay({ movie }) {
                         className="w-full h-full"
                         controls      // 소리조절, 전체화면, 구간이동 등 기본 컨트롤 활성화
                         autoPlay      // 전환 시 바로 재생
+                        muted
                         preload="metadata"
                     >
                         <source src="/video/intro_sample.mp4" type="video/mp4" />
@@ -124,10 +141,20 @@ export default function ContentsPlay({ movie }) {
             <div>
                 <h1 className="mt-6 text-3xl font-bold">{movie.title}</h1>
                 <h3 className="mt-4 flex items-center"><Star/>{movie.vote_average.toFixed(1)} <Dot/> {movie.release_date.slice(0,4)}</h3>
-                <button 
-                className="mt-5 w-full h-12 rounded-[8px] bg-white text-black font-bold cursor-pointer"
-                onClick={handlePlay}
-                >▶ 재생하기</button>
+                {
+                    playSwitch
+                    ?   <button 
+                        className="mt-5 w-full h-12 rounded-[8px] bg-gray-500/80 text-white font-bold cursor-pointer"
+                        onClick={()=>{setPlaySwitch(0)}}
+                        >■ 종료
+                        </button>
+                    :   <button 
+                        className="mt-5 w-full h-12 rounded-[8px] bg-white text-black font-bold cursor-pointer"
+                        onClick={handlePlay}
+                        >▶ 재생하기
+                        </button>
+                }
+
                 <div className="mt-5 flex gap-2 w-full h-9 text-center">
                     <button 
                         className={`rounded-[30px] w-[25%] md:w-[12.5%] h-full text-[14px] cursor-pointer transition-colors ${
