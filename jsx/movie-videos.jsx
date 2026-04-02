@@ -1,15 +1,16 @@
+import { use } from "react";
 import { API_URL } from "../app/(home)/page";
 
 
-async function getVideos(id) {
+export async function getVideos(id) {
     const response = await fetch(`${API_URL}/${id}/videos`, {
         next: { revalidate: 3600 } // 1시간동안 캐시 유지
     });
     return response.json();
 }
 
-export default async function MovieVideos({ id }) {
-    const videos = await getVideos(id)
+export default function MovieVideos({ id }) {
+    const videos = use(id)
     return (
         <>
             {
