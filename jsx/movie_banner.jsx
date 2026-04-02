@@ -28,17 +28,16 @@ export default function BannerM({ movies, title }) {
   const DB_VERSION = 1; 
   const [isWished, setIsWished] = useState({});
 
-  // --- 추가된 함수: 비디오 키 가져오기 ---
   const fetchVideoKey = async (id) => {
     if (videoKeys[id]) return; // 이미 있으면 다시 호출 안 함
     try {
       const response = await fetch(`${API_URL}/${id}/videos`);
       const data = await response.json();
     if (data && data.length >= 4) {
-        // 4번째 값(인덱스 3)을 가져옴
+        // 4번째 값
         setVideoKeys(prev => ({ ...prev, [id]: data[3].key }));
       } else if (data && data.length > 0) {
-        // 만약 4번째 값이 없다면, 가장 첫 번째 값이라도 가져오도록 예외 처리 (선택 사항)
+        // 만약 4번째 값이 없다면 첫번째값 호출
         setVideoKeys(prev => ({ ...prev, [id]: data[0].key }));
       }
     } catch (error) {
@@ -245,7 +244,7 @@ const saveData = async (storeName, data) => {
                           title="YouTube video player" 
                           frameBorder="0" 
                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                          allowFullScreen // 'S' 대문자 확인 (React 기준)
+                          allowFullScreen
                         ></iframe>
                         
                       : <img src={movie.backdrop_path} alt={movie.title} className="w-full h-full object-cover transition-opacity duration-500 pointer-events-none aspect-[2/1] object-top"/>

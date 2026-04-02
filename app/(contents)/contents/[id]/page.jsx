@@ -11,7 +11,7 @@ export default async function DirectContents({ params }) {
             <h3 className="hidden 2xl:block text-3xl absolute bottom-[4%] right-[10%] opacity-15">SAMPLE 영상입니다.</h3>
             <video 
                 className="w-full h-full"
-                controls      // 소리조절, 전체화면, 구간이동 등 기본 컨트롤 활성화
+                controls      // 컨트롤바
                 autoPlay      // 전환 시 바로 재생
                 preload="metadata"
             >

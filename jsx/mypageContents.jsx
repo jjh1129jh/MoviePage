@@ -111,17 +111,14 @@ function SliderSection({ title, items, isMobile, emptyMessage }) {
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(false);
 
-  // 화살표 상태를 체크하는 함수
   const checkArrows = useCallback(() => {
     if (sliderRef.current) {
       const { scrollLeft, scrollWidth, clientWidth } = sliderRef.current;
-      // 오차 범위를 고려하여 5px 정도의 여유를 둠
       setShowLeftArrow(scrollLeft > 5);
       setShowRightArrow(scrollLeft < scrollWidth - clientWidth - 5);
     }
   }, []);
 
-  // 데이터 로드 시점이나 윈도우 리사이즈 시 화살표 체크
   useEffect(() => {
     const timer = setTimeout(checkArrows, 100);
     
@@ -189,7 +186,7 @@ function SliderSection({ title, items, isMobile, emptyMessage }) {
               </div>
             ))
           ) : (
-            /* 비어있을 때 스타일 */
+            /* 비어있을 때 */
             <div className="flex-none w-[27%] sm:w-[30%] md:w-[22%] lg:w-[17.5%]">
               <div className="relative aspect-[2/3] flex items-center justify-center bg-[#181818]/30 rounded-xl border border-dashed border-gray-800 p-4 text-center">
                 <p className="text-gray-500 text-xs md:text-sm leading-relaxed break-keep">

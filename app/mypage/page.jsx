@@ -1,4 +1,4 @@
-import MyContentList from "../../jsx/mypageContents"; // 파일 경로를 실제 위치에 맞게 수정하세요
+import MyContentList from "../../jsx/mypageContents";
 
 export const metadata = {
   title: "My Page | Next Movies",

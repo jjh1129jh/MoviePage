@@ -68,8 +68,6 @@ export default function MovieSlider({ movies, title }) {
       return null; 
     }
 
-    // 💡 높이는 h-auto이므로 top 위치는 중앙 정렬을 위해 적절한 offset 유지
-    // 모달이 위로 솟아오르는 느낌을 주기 위해 top 좌표를 이미지 상단 부근으로 잡습니다.
     let top = modalPos.top - 70; 
     let left = (modalPos.left - scrollOffset) + (modalPos.width / 2) - (modalWidth / 2);
 
@@ -80,7 +78,7 @@ export default function MovieSlider({ movies, title }) {
     return {
       top: `${top}px`,
       left: `${safeLeft}px`,
-      width: `${modalWidth}px`, // 💡 계산된 너비 적용
+      width: `${modalWidth}px`,
     };
   };
 
@@ -135,7 +133,7 @@ export default function MovieSlider({ movies, title }) {
           <div 
             className={`absolute bg-[#181818] rounded-2xl overflow-hidden shadow-[0_0_60px_rgba(0,0,0,0.9)] z-[100] pointer-events-auto
               ${isClosing ? 'animate-fadeOut scale-95 opacity-0' : 'animate-radialIn'} transition-all duration-300`}
-            style={modalStyle} // width와 left, top이 포함됨
+            style={modalStyle}
             onMouseLeave={handleCloseModal}
           >
             <div className="w-full h-full flex flex-col cursor-pointer" onClick={() => imgLink(selectedMovieId)}>
