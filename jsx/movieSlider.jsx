@@ -106,7 +106,7 @@ export default function MovieSlider({ movies, title }) {
         {showLeftArrow && !isMobile && (
           <button 
             onClick={() => scrollTo("left")} 
-            className="absolute bg-[url('/img/slider_arrow.svg')] bg-no-repeat bg-contain left-[2%] top-[37%] -translate-y-1/2 w-10 h-10 rotate-270 z-50 cursor-pointer hover:brightness-125 transition-all"
+            className="absolute bg-[url('/img/slider_arrow.svg')] bg-no-repeat bg-contain left-[2%] top-[37%] hover:scale-125 -translate-y-1/2 w-10 h-10 rotate-270 z-50 cursor-pointer hover:brightness-125 transition-all"
           />
         )}
 
@@ -128,7 +128,7 @@ export default function MovieSlider({ movies, title }) {
         {showRightArrow && !isMobile && (
           <button 
             onClick={() => scrollTo("right")} 
-            className="absolute bg-[url('/img/slider_arrow.svg')] bg-no-repeat bg-contain right-[2%] top-[37%] -translate-y-1/2 w-10 h-10 rotate-90 z-50 cursor-pointer hover:brightness-125 transition-all"
+            className="absolute bg-[url('/img/slider_arrow.svg')] bg-no-repeat bg-contain right-[2%] top-[37%] hover:scale-125 -translate-y-1/2 w-10 h-10 rotate-90 z-50 cursor-pointer hover:brightness-125 transition-all"
           />
         )}
         {!isMobile && selectedMovieId && modalStyle && (

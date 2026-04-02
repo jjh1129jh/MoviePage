@@ -102,8 +102,11 @@ export default function ContentsPlay({ movie }) {
                     playSwitch === 0
                     ?   <>
                             <img src={movie.backdrop_path} alt={movie.title} />
-                            <div className="absolute w-full h-full bg-black/20 opacity-0 transition-opacity duration-200 hover:opacity-100 top-0 left-0 flex items-center justify-center">
-                                <img src="/img/playBtn.svg" alt="재생하기" className="w-[7%] cursor-pointer" onClick={handlePlay}/>
+                            <div className={`absolute w-full h-full bg-black/20
+                            top-0 left-0 flex items-center justify-center
+                            2xl:opacity-0 2xl:transition-opacity 2xl:duration-200 2xl:hover:opacity-100
+                            `}>
+                                <img src="/img/playBtn.svg" alt="재생하기" className="w-[12%] md:w-[7%] cursor-pointer" onClick={handlePlay}/>
                             </div>
                         </>
                     :   
