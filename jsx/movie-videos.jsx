@@ -22,6 +22,7 @@ export default function MovieVideos({ id }) {
                     title={video.name}
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
+                    loading="lazy"
                     />
                 ))
             }
