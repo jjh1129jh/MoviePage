@@ -130,7 +130,6 @@ export default function ContentsPlay({ movie }) {
                         className="w-full h-full"
                         controls      // 소리조절, 전체화면, 구간이동 등 기본 컨트롤 활성화
                         autoPlay      // 전환 시 바로 재생
-                        muted
                         preload="metadata"
                     >
                         <source src="/video/intro_sample.mp4" type="video/mp4" />
