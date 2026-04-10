@@ -8,6 +8,9 @@ export const metadata = {
     default: "Loading..."
   },
   description: 'JH의 MoviePage 입니다.',
+  icons: {
+    icon: '/img/logo.png'
+  },
 }
 
 export default function RootLayout({ children }) {

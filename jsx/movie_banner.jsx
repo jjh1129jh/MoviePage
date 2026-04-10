@@ -224,7 +224,7 @@ const saveData = async (storeName, data) => {
         >
           <div className="flex-none w-[12.5%] md:w-[7.5%] shrink-0" />
 
-          {[...movies].filter((_, index) => [5, 9, 10, 14, 17].includes(index)).map((movie) => (
+          {[...movies].filter((_, index) => [6, 9, 10, 14, 17].includes(index)).map((movie) => (
             <div 
               key={movie.id} 
               className="flex-none snap-center transition-transform duration-300 w-[75%] md:w-[85%] border-1 md:border-0 border-gray-400/50 rounded-2xl overflow-hidden shadow-xl"
